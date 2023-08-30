@@ -44,15 +44,3 @@ class OrderListTest {
         assertThat(orderList.sortedOrderList().last().getId() == 1);
     }
 }
-/*
-final int N = 8;
-Random rand = new Random();
-List<Order> list = new ArrayList<>();
-User testUser = new User("Taylor", "Joy", 25, true);
-for (int i = 0; i < N; i++) {
-    double dist = (double) rand.nextInt(1000) /100;
-    int ratePicker = rand.nextInt(100) % 3;
-    Rate rate = (ratePicker == 0 ? Rate.DAY : (ratePicker == 1 ? Rate.NIGHT : Rate.RUSH_HOUR));
-    Order testOrder = new DowntownOrder(i, testUser, BigDecimal.valueOf(dist), rate);
-}
- */

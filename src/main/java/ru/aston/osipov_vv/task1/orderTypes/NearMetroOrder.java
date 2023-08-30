@@ -31,7 +31,7 @@ public class NearMetroOrder extends Order {
     public BigDecimal calculateTotal() {
         getDiscount();
         final BigDecimal minCost = BigDecimal.valueOf(80);
-        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(3)).add(minCost);
+        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(20)).add(minCost);
         res = res.multiply(getCoefficient());
         return res;
     }

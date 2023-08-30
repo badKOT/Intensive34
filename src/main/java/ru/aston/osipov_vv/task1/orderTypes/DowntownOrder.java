@@ -31,7 +31,7 @@ public class DowntownOrder extends Order {
     public BigDecimal calculateTotal() {
         getDiscount();
         final BigDecimal minCost = BigDecimal.valueOf(100);
-        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(3)).add(minCost);
+        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(30)).add(minCost);
         res = res.multiply(getCoefficient());
         return res;
     }
