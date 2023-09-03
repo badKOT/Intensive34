@@ -10,8 +10,6 @@ import ru.aston.osipov_vv.task1.exceptions.NegativeTotalException;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class DowntownOrderTest {
 
     @Test
@@ -29,11 +27,13 @@ class DowntownOrderTest {
     }
 
     @Test
-    void calculateTotal() {
+    void calculateTotal() throws NegativeTotalException {
         User testUser = new User("Thomas", "Soyer", 24, true);
         Order order = new DowntownOrder(1, testUser, BigDecimal.TWO, Rate.NIGHT);
-        double subtotal = (2 * 30 + 100) * 0.95;
-        Assertions.assertEquals(BigDecimal.valueOf(subtotal), order.getTotal());
+        int subtotal = (2 * 30 + 100);
+        Assertions.assertEquals(
+                new BigDecimal(subtotal).multiply(new BigDecimal("0.95")),
+                order.getTotal());
     }
 
     @Test
@@ -47,6 +47,6 @@ class DowntownOrderTest {
     void itShouldCatchNegativeTotalException() {
         User testUser = new User("Thomas", "Soyer", 24, false);
         Order order = new DowntownOrder(1, testUser, new BigDecimal(-179), Rate.DAY);
-        Assertions.assertEquals(BigDecimal.ONE, order.getTotal());
+        Assertions.assertThrows(NegativeTotalException.class, order::getTotal);
     }
 }

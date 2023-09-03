@@ -3,8 +3,6 @@ package ru.aston.osipov_vv.task1.orderTypes;
 import ru.aston.osipov_vv.task1.entities.Order;
 import ru.aston.osipov_vv.task1.entities.Rate;
 import ru.aston.osipov_vv.task1.entities.User;
-import ru.aston.osipov_vv.task1.exceptions.NegativeCoefficientException;
-import ru.aston.osipov_vv.task1.exceptions.NegativeTotalException;
 
 import java.math.BigDecimal;
 
@@ -15,28 +13,14 @@ public class NearMetroOrder extends Order {
         super(id, user, distance);
         this.rate = rate;
         setCoefficient(calculateCoefficient());
-        try {
-            setTotal(calculateTotal());
-            if (getTotal().signum() != 1) throw new NegativeTotalException("Negative total");
-        } catch (NegativeTotalException e) {
-            System.out.println(e.getMessage());
-            System.out.println("New total = 1.");
-            setTotal(BigDecimal.ONE);
-        }
+        setTotal(calculateTotal());
     }
 
     @Override
     public void getDiscount() {
         // Скидка в 5% постоянным пользователям вне пикового времени
-        if (getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR) {
-            BigDecimal dec = getCoefficient();
-            try {
-                setCoefficient(dec.subtract(new BigDecimal("0.05")));
-                if (getCoefficient().signum() != 1) throw new NegativeCoefficientException("Negative coefficient");
-            } catch (NegativeCoefficientException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        if (getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR)
+            setCoefficient(getCoefficient().subtract(new BigDecimal("0.05")));
     }
 
     @Override

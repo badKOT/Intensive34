@@ -2,6 +2,7 @@ package ru.aston.osipov_vv.task1.entities;
 
 import ru.aston.osipov_vv.task1.discount.CostCalculation;
 import ru.aston.osipov_vv.task1.discount.Discount;
+import ru.aston.osipov_vv.task1.exceptions.NegativeTotalException;
 
 import java.math.BigDecimal;
 
@@ -34,8 +35,11 @@ public abstract class Order implements Discount, Comparable<Order>, CostCalculat
         this.coefficient = coefficient;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public BigDecimal getTotal() throws NegativeTotalException {
+        if (this.total.signum() != 1)
+            throw new NegativeTotalException(1, "Negative total");
+        else
+            return this.total;
     }
 
     public void setTotal(BigDecimal total) {
