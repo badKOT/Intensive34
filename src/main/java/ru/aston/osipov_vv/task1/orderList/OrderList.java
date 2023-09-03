@@ -1,6 +1,7 @@
 package ru.aston.osipov_vv.task1.orderList;
 
 import ru.aston.osipov_vv.task1.entities.Order;
+import ru.aston.osipov_vv.task1.exceptions.NegativeTotalException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class OrderList {
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
 
     public OrderList(ArrayList<Order> orders) {
         this.orders = orders;
@@ -19,7 +20,7 @@ public class OrderList {
         orders.add(order);
     }
 
-    public BigDecimal calculateTotalOrderValue() {
+    public BigDecimal calculateTotalOrderValue() throws NegativeTotalException {
         BigDecimal res = BigDecimal.ZERO;
         for (Order order : orders)
             res = res.add(order.getTotal());
