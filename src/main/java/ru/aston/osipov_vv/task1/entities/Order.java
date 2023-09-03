@@ -6,14 +6,11 @@ import ru.aston.osipov_vv.task1.discount.Discount;
 import java.math.BigDecimal;
 
 public abstract class Order implements Discount, Comparable<Order>, CostCalculation {
-    private int id;
-    private User user;
+    private final int id;
+    private final User user;
     private BigDecimal coefficient;
     private BigDecimal total;
     private BigDecimal distance;
-
-    public Order() {
-    }
 
     public Order(int id, User user, BigDecimal distance) {
         this.id = id;
@@ -25,16 +22,8 @@ public abstract class Order implements Discount, Comparable<Order>, CostCalculat
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public BigDecimal getCoefficient() {

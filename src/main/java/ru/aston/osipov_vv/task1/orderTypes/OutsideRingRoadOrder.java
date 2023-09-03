@@ -3,35 +3,48 @@ package ru.aston.osipov_vv.task1.orderTypes;
 import ru.aston.osipov_vv.task1.entities.Order;
 import ru.aston.osipov_vv.task1.entities.Rate;
 import ru.aston.osipov_vv.task1.entities.User;
+import ru.aston.osipov_vv.task1.exceptions.NegativeCoefficientException;
+import ru.aston.osipov_vv.task1.exceptions.NegativeTotalException;
 
 import java.math.BigDecimal;
 
 public class OutsideRingRoadOrder extends Order {
     private final Rate rate;
 
-//    public OutsideRingRoadOrder(Rate rate) {
-//        this.rate = rate;
-//    }
-
     public OutsideRingRoadOrder(int id, User user, BigDecimal distance, Rate rate) {
         super(id, user, distance);
         this.rate = rate;
         setCoefficient(calculateCoefficient());
-        setTotal(calculateTotal());
+        try {
+            setTotal(calculateTotal());
+            if (getTotal().signum() != 1) throw new NegativeTotalException("Negative total");
+        } catch (NegativeTotalException e) {
+            System.out.println(e.getMessage());
+            System.out.println("New total = 1.");
+            setTotal(BigDecimal.ONE);
+        }
     }
 
     @Override
     public void getDiscount() {
         // Скидка в 5% постоянным пользователям вне пикового времени
-        if (this.getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR)
-            setCoefficient(getCoefficient().subtract(BigDecimal.valueOf(0.05)));
+        if (getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR) {
+            BigDecimal dec = getCoefficient();
+            try {
+                setCoefficient(dec.subtract(new BigDecimal("0.05")));
+                if (getCoefficient().signum() != 1) throw new NegativeCoefficientException("Negative coefficient");
+            } catch (NegativeCoefficientException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
     public BigDecimal calculateTotal() {
         getDiscount();
-        final BigDecimal minCost = BigDecimal.valueOf(70);
-        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(12)).add(minCost);
+        final BigDecimal MIN_COST = new BigDecimal(70);
+        final BigDecimal RATIO = new BigDecimal(12);
+        BigDecimal res = getDistance().multiply(RATIO).add(MIN_COST);
         res = res.multiply(getCoefficient());
         return res;
     }
@@ -40,13 +53,13 @@ public class OutsideRingRoadOrder extends Order {
     public BigDecimal calculateCoefficient() {
         // Coefficient for daytime orders
         if (this.rate == Rate.DAY)
-            return BigDecimal.valueOf(0.8);
+            return new BigDecimal("0.8");
 
         // Coefficient for nighttime orders
         if (this.rate == Rate.NIGHT)
-            return BigDecimal.valueOf(0.9);
+            return new BigDecimal("0.9");
 
         // Coefficient for rush hour orders
-        return BigDecimal.valueOf(1.2);
+        return new BigDecimal("1.2");
     }
 }

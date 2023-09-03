@@ -9,7 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class OrderList {
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
 
     public OrderList(ArrayList<Order> orders) {
         this.orders = orders;

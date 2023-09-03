@@ -39,7 +39,7 @@ class OrderListTest {
         Order testOrder = new DowntownOrder(1, testUser, BigDecimal.TEN, Rate.NIGHT);
         orderList.addOrder(testOrder);
         testUser.setLastName("Crank");
-        testOrder.setUser(testUser);
+//        testOrder.setUser(testUser);
         orderList.addOrder(testOrder);
         assertThat(orderList.sortedOrderList().last().getId() == 1);
     }
