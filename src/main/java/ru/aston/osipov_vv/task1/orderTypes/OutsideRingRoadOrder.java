@@ -9,10 +9,6 @@ import java.math.BigDecimal;
 public class OutsideRingRoadOrder extends Order {
     private final Rate rate;
 
-//    public OutsideRingRoadOrder(Rate rate) {
-//        this.rate = rate;
-//    }
-
     public OutsideRingRoadOrder(int id, User user, BigDecimal distance, Rate rate) {
         super(id, user, distance);
         this.rate = rate;
@@ -23,15 +19,16 @@ public class OutsideRingRoadOrder extends Order {
     @Override
     public void getDiscount() {
         // Скидка в 5% постоянным пользователям вне пикового времени
-        if (this.getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR)
-            setCoefficient(getCoefficient().subtract(BigDecimal.valueOf(0.05)));
+        if (getUser().isConstantUser() && this.rate != Rate.RUSH_HOUR)
+            setCoefficient(getCoefficient().subtract(new BigDecimal("0.05")));
     }
 
     @Override
     public BigDecimal calculateTotal() {
         getDiscount();
-        final BigDecimal minCost = BigDecimal.valueOf(70);
-        BigDecimal res = getDistance().multiply(BigDecimal.valueOf(12)).add(minCost);
+        final BigDecimal MIN_COST = new BigDecimal(70);
+        final BigDecimal RATIO = new BigDecimal(12);
+        BigDecimal res = getDistance().multiply(RATIO).add(MIN_COST);
         res = res.multiply(getCoefficient());
         return res;
     }
@@ -40,13 +37,13 @@ public class OutsideRingRoadOrder extends Order {
     public BigDecimal calculateCoefficient() {
         // Coefficient for daytime orders
         if (this.rate == Rate.DAY)
-            return BigDecimal.valueOf(0.8);
+            return new BigDecimal("0.8");
 
         // Coefficient for nighttime orders
         if (this.rate == Rate.NIGHT)
-            return BigDecimal.valueOf(0.9);
+            return new BigDecimal("0.9");
 
         // Coefficient for rush hour orders
-        return BigDecimal.valueOf(1.2);
+        return new BigDecimal("1.2");
     }
 }
