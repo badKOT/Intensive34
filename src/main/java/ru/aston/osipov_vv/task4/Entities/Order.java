@@ -8,6 +8,12 @@ public class Order {
     public Order() {
     }
 
+    public Order(int id, String description, double total) {
+        this.id = id;
+        this.description = description;
+        this.total = total;
+    }
+
     public int getId() {
         return id;
     }
