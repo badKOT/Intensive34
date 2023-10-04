@@ -3,9 +3,7 @@ package ru.aston.osipov_vv.task6;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public class StreamAPITest {
 
