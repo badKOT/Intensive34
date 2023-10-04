@@ -10,7 +10,7 @@ public class Connector {
 
     public static Connection connect() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("app");
             String url = resourceBundle.getString("db.url");
             String user = resourceBundle.getString("db.user");
             String password = resourceBundle.getString("db.password");
