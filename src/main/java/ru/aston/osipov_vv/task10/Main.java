@@ -3,10 +3,9 @@ package ru.aston.osipov_vv.task10;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import ru.aston.osipov_vv.task10.interfaces.Knight;
+import ru.aston.osipov_vv.task10.interfaces.Quest;
 
 public class Main {
-
-//    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
@@ -20,10 +19,10 @@ public class Main {
         CharmingKnight charmingKnight = xmlContext.getBean(CharmingKnight.class);
         charmingKnight.startQuest();
 
-//        Quest quest = context.getBean(Quest.class);
+        Quest quest = context.getBean(Quest.class);
+        quest.start();
 
         xmlContext.close();
         context.close();
     }
 }
-//logger.info("This is info log");

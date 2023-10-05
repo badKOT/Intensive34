@@ -1,24 +1,27 @@
 package ru.aston.osipov_vv.task10;
 
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.aston.osipov_vv.task10.interfaces.Quest;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+@Log4j2
 public class PrincessQuest implements Quest {
+
     @Override
     public void start() {
-        System.out.println("Starting a princess quest...");
+        log.info("Starting a princess quest...");
     }
 
     @PostConstruct
     public void init() {
-        LogManager.getLogger().info("Init method for Princess Quest has started!");
+        log.info("Init method for Princess Quest has started!");
     }
 
     @PreDestroy
     public void destroy() {
-        LogManager.getLogger().info("Destroy method for Princess Quest has started!");
+        log.info("Destroy method for Princess Quest has started!");
     }
 }

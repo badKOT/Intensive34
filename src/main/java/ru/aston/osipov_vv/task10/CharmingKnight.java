@@ -1,32 +1,18 @@
 package ru.aston.osipov_vv.task10;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.aston.osipov_vv.task10.interfaces.Knight;
 import ru.aston.osipov_vv.task10.interfaces.Quest;
 
+@Log4j2
 public class CharmingKnight implements Knight {
 
-    private int age;
+    @Autowired
+    @Qualifier("dragonQuestQualifier")
     private Quest quest;
-
-    public CharmingKnight() {
-    }
-
-    public CharmingKnight(int age) {
-        this.age = age;
-    }
-
-    public CharmingKnight(Quest quest) {
-        this.quest = quest;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public Quest getQuest() {
         return quest;
@@ -43,10 +29,10 @@ public class CharmingKnight implements Knight {
     }
 
     public void init() {
-        LogManager.getLogger().info("Init method for Charming Prince started!");
+        log.info("Init method for Charming Prince started!");
     }
 
     public void destroy() {
-        LogManager.getLogger().info("Destroy method for Charming Prince started!");
+        log.info("Destroy method for Charming Prince started!");
     }
 }
