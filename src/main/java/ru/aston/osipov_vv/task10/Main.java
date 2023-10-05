@@ -1,7 +1,6 @@
 package ru.aston.osipov_vv.task10;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import ru.aston.osipov_vv.task10.interfaces.Knight;
 
